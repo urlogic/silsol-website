@@ -555,32 +555,51 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <div id="google_translate_element" style="display:none"></div>
+<div id="google_translate_element" style="display:none"></div>
 
 <script>
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
-      pageLanguage: 'id',          // bahasa asli website Anda
-      includedLanguages: 'id,en',  // hanya 2 pilihan
+      pageLanguage: 'en',          // bahasa asli website Anda sekarang
+      includedLanguages: 'en,id',  // hanya 2 pilihan
       autoDisplay: false
     }, 'google_translate_element');
   }
 
+  function setTransCookie() {
+    document.cookie = 'googtrans=/en/id; path=/';
+    document.cookie = 'googtrans=/en/id; path=/; domain=' + location.hostname;
+  }
+
+  function clearTransCookie() {
+    var expired = 'expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    document.cookie = 'googtrans=; ' + expired;
+    document.cookie = 'googtrans=; ' + expired + '; domain=' + location.hostname;
+  }
+
   function changeLang(lang) {
-    const expired = 'expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-    if (lang === 'id') {
-      // kembali ke bahasa Indonesia (hapus terjemahan)
-      document.cookie = 'googtrans=; ' + expired;
-      document.cookie = 'googtrans=; ' + expired + '; domain=' + location.hostname;
-    } else {
-      document.cookie = 'googtrans=/id/en; path=/';
-      document.cookie = 'googtrans=/id/en; path=/; domain=' + location.hostname;
-    }
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+    if (lang === 'id') { setTransCookie(); } else { clearTransCookie(); }
     location.reload();
   }
+
+  // Pengunjung baru otomatis mendapat Bahasa Indonesia
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) {}
+    if (!saved) {
+      saved = 'id';
+      try { localStorage.setItem('lang', 'id'); } catch (e) {}
+    }
+    var sudahId = document.cookie.indexOf('googtrans=/en/id') !== -1;
+    if (saved === 'id' && !sudahId) {
+      setTransCookie();
+      // reload hanya jika cookie berhasil dipasang (mencegah loop)
+      if (document.cookie.indexOf('googtrans=/en/id') !== -1) location.reload();
+    }
+  })();
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 
 </html> 
