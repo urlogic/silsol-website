@@ -1,9 +1,9 @@
 /**
-* Template Name: DevFolio
-* Updated: Jul 27 2023 with Bootstrap v5.3.1
-* Template URL: https://bootstrapmade.com/devfolio-bootstrap-portfolio-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
+* Template Name: Logic Portfolio Website Template
+* Updated: Logic Portfolio Website Template
+* Template URL: Logic Portfolio Website Template
+* Author: Logic Portfolio Website Template
+* License: Logic Portfolio Website Template
 */
 
 /*--------------------------------------------------------------
@@ -1460,3 +1460,6 @@ footer .credits {
 footer .credits a {
   color: #fff;
 }
+
+.goog-te-banner-frame, .skiptranslate iframe { display: none !important; }
+  body { top: 0 !important; }
